@@ -1,6 +1,6 @@
 # nixafnetlink
 
-Raw kernel netlink `NETLINK_KOBJECT_UEVENT` from C userspace. No libudev, no udevadm.
+Raw kernel netlink `NETLINK_KOBJECT_UEVENT` from C userspace. No libudev, no udevadm. Apache-2.0.
 
 Intended to replace the 2s sysfs poll in the plug-popup watchers:
 

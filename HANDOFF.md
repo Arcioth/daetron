@@ -2,7 +2,7 @@
 
 Started 2026-09-03. WhatsApp away session.
 
-GitHub: https://github.com/Arcioth/nixafnetlink (public).
+GitHub: https://github.com/Arcioth/nixafnetlink (public, Apache-2.0). README leads with measured results vs the three bash watchers.
 
 ## Status
 

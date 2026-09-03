@@ -46,3 +46,8 @@
 - Dry-run: DJI USB-C still beat 1000–1500 ms debounce (partner add, then `2ca3` ~1s later). Timer fired before the USB packet was read.
 - Drain netlink (`MSG_DONTWAIT`) before firing debounce. Retract an armed rule if a suppress VID shows up after the fact (`retract imex (saw 2ca3/…)`).
 - Dry-run cycle 3: DJI retracts IMEX on `2ca3/4011/0`; logi add/remove; real pad add/remove with no retract. During debounce, sysfs is rechecked every 100 ms so a gadget VID can cancel before `on_add` runs.
+
+## 0.2.2 — 2026-09-03
+
+- Apache License 2.0 (`LICENSE`).
+- README rewritten: results and comparative RSS/CPU first, mermaid charts, dry-run log, approach diagrams. web4p-style sections.
