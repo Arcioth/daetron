@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 — 2026-09-03
+
+- Project renamed to **arclinkdae**. Folder `~/Documents/arclinkdae`. GitHub `Arcioth/arclinkdae` (former nixafnetlink name redirects). Binary, rules dir, pid/lock, env `ARCLINKDAE_RULES`.
+- Future field tests target Arch as well as NixOS.
+
 ## 0.1.0 — 2026-09-03
 
 - New repo: raw `NETLINK_KOBJECT_UEVENT` listener in C. No libudev.
@@ -35,10 +40,10 @@
 
 ## 0.2.0 — 2026-09-03
 
-- Dispatcher: `nixafnetlink run -r rules.d`. Loads `*.rule` into memory, one sysfs scan, then netlink. SIGHUP / `nixafnetlink reload`. `--dry-run`.
+- Dispatcher: `arclinkdae run -r rules.d`. Loads `*.rule` into memory, one sysfs scan, then netlink. SIGHUP / `arclinkdae reload`. `--dry-run`.
 - IMEX: 1000 ms debounce, suppress `2ca3/` and `46d/`. Remove is skipped if add never fired.
 - `on_add` is `/bin/sh -c` (Tauri, Kitty, anything). `on_remove=kill:comm` or a command. `$HOME` expanded.
-- Examples in `examples/`. User unit in `contrib/nixafnetlink.service`. README for adding a device.
+- Examples in `examples/`. User unit in `contrib/arclinkdae.service`. README for adding a device.
 - Binary ~92 KB static, ~156 KB RSS with three rules. Bash watchers not replaced yet.
 
 ## 0.2.1 — 2026-09-03

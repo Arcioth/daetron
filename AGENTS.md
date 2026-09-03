@@ -1,4 +1,4 @@
-# nixafnetlink
+# arclinkdae
 
 Raw kernel netlink `NETLINK_KOBJECT_UEVENT` from C userspace. No libudev, no udevadm. Apache-2.0.
 
@@ -19,8 +19,8 @@ Kernel `PRODUCT` is `%x` (Logitech `046d` arrives as `46d`).
 - Bind multicast **group 1** (kernel). Group 2 is udev userspace — do not use it.
 - Filter `usb_device` only for USB applets. Interface `add` bursts were the six-copy bug.
 - New applet = new file in `rules.d/`. Do not hardcode the next device in C. Tauri vs Kitty is `on_add` only.
-- Rules load at start into memory. Reload is SIGHUP / `nixafnetlink reload`. No inotify, no disk read per plug.
-- One daemon: `./nixafnetlink run -r rules.d`. Dump/applet are debug.
+- Rules load at start into memory. Reload is SIGHUP / `arclinkdae reload`. No inotify, no disk read per plug.
+- One daemon: `./arclinkdae run -r rules.d`. Dump/applet are debug.
 - Event-driven does not respawn: add execs once, remove kills. User closed the window while plugged stays down until unplug. No DISMISS file.
 
 ## Do not

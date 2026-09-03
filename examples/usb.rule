@@ -1,6 +1,6 @@
 # Copy to rules.d/, set PRODUCT, reload.
 # Kernel PRODUCT is hex without leading zeros (Logitech 046d → 46d).
-# Find it with: ./nixafnetlink dump
+# Find it with: ./arclinkdae dump
 #
 # name=my-usb
 # match_subsystem=usb

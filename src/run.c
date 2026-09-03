@@ -114,12 +114,12 @@ static const char *runtime_dir(void)
 
 static int pidfile_path(char *buf, size_t n)
 {
-	return snprintf(buf, n, "%s/nixafnetlink.pid", runtime_dir());
+	return snprintf(buf, n, "%s/arclinkdae.pid", runtime_dir());
 }
 
 static int lock_path(char *buf, size_t n)
 {
-	return snprintf(buf, n, "%s/nixafnetlink.lock", runtime_dir());
+	return snprintf(buf, n, "%s/arclinkdae.lock", runtime_dir());
 }
 
 static void write_pid(void)

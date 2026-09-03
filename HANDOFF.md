@@ -1,12 +1,12 @@
-# nixafnetlink handoff
+# arclinkdae handoff
 
 Started 2026-09-03. WhatsApp away session.
 
-GitHub: https://github.com/Arcioth/nixafnetlink (public, Apache-2.0). README leads with measured results vs the three bash watchers.
+GitHub: https://github.com/Arcioth/arclinkdae (public, Apache-2.0). README leads with measured results vs the three bash watchers.
 
 ## Status
 
-Scaffold is in `~/Documents/nixafnetlink`. One C binary, `uevent`, binds `NETLINK_KOBJECT_UEVENT` group 1 as an unprivileged user and blocks on `recv`. `--applet` keeps only DJI / Logitech / IMEX add|remove.
+Scaffold is in `~/Documents/arclinkdae`. One C binary, `uevent`, binds `NETLINK_KOBJECT_UEVENT` group 1 as an unprivileged user and blocks on `recv`. `--applet` keeps only DJI / Logitech / IMEX add|remove.
 
 Default build is **musl `-static`**. Live processes after 10 min (including the field test):
 
@@ -34,7 +34,7 @@ boot / SIGHUP  →  read rules.d into memory, one sysfs scan
 kernel uevent  →  match the in-memory table  →  exec/kill + SIGRTMIN+N waybar
 ```
 
-- **Load:** start, and `kill -HUP` / `systemctl --user reload nixafnetlink` (or a `uevent reload` that signals the running pid).
+- **Load:** start, and `kill -HUP` / `systemctl --user reload arclinkdae` (or a `uevent reload` that signals the running pid).
 - **Not:** inotify on `rules.d/` (extra fd, extra wakes, new applets are rare).
 - **Not:** `open()` the rule file on every add/remove.
 
@@ -42,11 +42,11 @@ New popup = drop a file in `rules.d/` + reload. No C edit. Draft rules: `dji`, `
 
 Waybar: drop `interval: 2` on `custom/imex` and `custom/mother`; keep `signal` 6/7. The daemon pokes waybar only on add/remove. Status scripts still run, just not every 2s.
 
-Dispatcher is `./nixafnetlink run`. musl static, ~92 KB disk, ~156 KB RSS dry-run (rules + poll). `--dry-run` prints actions. Do not swap systemd units until a live plug is proven in `run` (not just dump). `contrib/nixafnetlink.service` is an example only.
+Dispatcher is `./arclinkdae run`. musl static, ~92 KB disk, ~156 KB RSS dry-run (rules + poll). `--dry-run` prints actions. Do not swap systemd units until a live plug is proven in `run` (not just dump). `contrib/arclinkdae.service` is an example only.
 
 Adding a device is a `.rule` file + reload. Not a C change. `on_add` is any command (Tauri, Kitty, script).
 
-**Idle daemon vs wake-on-plug:** the kernel only delivers uevents to a bound netlink socket. Something has to hold that fd. Today that is `nixafnetlink run` blocked in `recv` (~150 KB, 0% CPU). systemd *can* hold it instead (`ListenNetlink=kobject-uevent 1`, `contrib/nixafnetlink.socket`) and fork us per burst — but group 1 is *every* kobject, so that is more starts, not fewer, unless we stay running after the first packet. LISTEN_FDS is not wired yet. Do not switch unless idle RSS becomes a problem.
+**Idle daemon vs wake-on-plug:** the kernel only delivers uevents to a bound netlink socket. Something has to hold that fd. Today that is `arclinkdae run` blocked in `recv` (~150 KB, 0% CPU). systemd *can* hold it instead (`ListenNetlink=kobject-uevent 1`, `contrib/arclinkdae.socket`) and fork us per burst — but group 1 is *every* kobject, so that is more starts, not fewer, unless we stay running after the first packet. LISTEN_FDS is not wired yet. Do not switch unless idle RSS becomes a problem.
 
 Verified: bind succeeds, process sits in `recv`. Writing `/sys/.../uevent` to synthesize a packet needs root; real proof is a hardware plug.
 
@@ -91,13 +91,13 @@ Live watchers are **unchanged**: they still poll sysfs every 2s (`micmini2-watch
 ## Run
 
 ```bash
-cd ~/Documents/nixafnetlink
+cd ~/Documents/arclinkdae
 nix develop -c make
-./nixafnetlink dump
-./nixafnetlink applet
-./nixafnetlink run -r rules.d --dry-run -v
-./nixafnetlink run -r rules.d
-./nixafnetlink reload
+./arclinkdae dump
+./arclinkdae applet
+./arclinkdae run -r rules.d --dry-run -v
+./arclinkdae run -r rules.d
+./arclinkdae reload
 ```
 
 No root. If `bind` fails, say so — do not fall back to udev.

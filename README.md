@@ -1,4 +1,4 @@
-# nixafnetlink
+# arclinkdae
 
 > A small C sleeper that turns raw kernel plug/unplug events into a command — no libudev, no 2-second sysfs poll.
 
@@ -7,7 +7,7 @@
 ![Linux](https://img.shields.io/badge/Linux-netlink-FCC624?logo=linux&logoColor=000)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue)
 
-nixafnetlink binds `NETLINK_KOBJECT_UEVENT` multicast **group 1** (kernel kobject, not udev group 2), loads drop-in `rules.d/*.rule` files into memory, and execs/kills on match. The applet can be Tauri, Kitty, or a script — that is `on_add`, not C.
+arclinkdae binds `NETLINK_KOBJECT_UEVENT` multicast **group 1** (kernel kobject, not udev group 2), loads drop-in `rules.d/*.rule` files into memory, and execs/kills on match. The applet can be Tauri, Kitty, or a script — that is `on_add`, not C.
 
 Measured 2026-09-03 on an AMD X870 / NixOS box against the three live bash watchers it is meant to replace.
 
@@ -21,16 +21,16 @@ One daemon vs three `sleep 2` loops. Same three devices: DJI Mic Mini 2 RX (`2ca
 | mother-watch (bash) | 4808 KB | 0.2% | `sleep 2` + sysfs | 0–2 s |
 | imex-watch (bash) | 4788 KB | ~0% | `sleep 2` + sysfs | 0–2 s |
 | **three watchers together** | **~14.4 MB** | **~0.4%** | poll | 0–2 s |
-| nixafnetlink dump (musl) | 68 KB | 0 ticks / 3 s | `recv` | event |
-| **nixafnetlink run** (3 rules) | **160 KB** | **0 ticks** | `recv` | event (IMEX +1.5 s debounce) |
-| nixafnetlink glibc (dump, not default) | 1492 KB | 0 ticks | `recv` | event |
+| arclinkdae dump (musl) | 68 KB | 0 ticks / 3 s | `recv` | event |
+| **arclinkdae run** (3 rules) | **160 KB** | **0 ticks** | `recv` | event (IMEX +1.5 s debounce) |
+| arclinkdae glibc (dump, not default) | 1492 KB | 0 ticks | `recv` | event |
 
 ~90× less RSS than the three pollers. CPU is a blocked syscall, not a timer. Disk image is 92 KB static.
 
 ```mermaid
 xychart-beta
     title Idle RSS (KB), same machine 2026-09-03
-    x-axis ["micmini2-watch", "mother-watch", "imex-watch", "nixafnetlink run"]
+    x-axis ["micmini2-watch", "mother-watch", "imex-watch", "arclinkdae run"]
     y-axis "RSS KB" 0 --> 5200
     bar [4784, 4808, 4788, 160]
 ```
@@ -75,14 +75,14 @@ udev is a second userspace netlink (group 2) on top of the kernel multicast. `ud
 
 ```mermaid
 flowchart LR
-  K[kernel kobject] -->|NETLINK_KOBJECT_UEVENT group 1| S[nixafnetlink recv]
+  K[kernel kobject] -->|NETLINK_KOBJECT_UEVENT group 1| S[arclinkdae recv]
   S --> R[rules.d in RAM]
   R -->|add| A["on_add: Tauri / Kitty / script"]
   R -->|remove| KILL[kill:comm or command]
   R -->|optional| W[SIGRTMIN+N waybar]
 ```
 
-Something must hold the netlink fd. This daemon is that holder: it sleeps in `recv` (~160 KB, 0% CPU). systemd `ListenNetlink=` can hold the socket instead, but group 1 is *every* kobject (modules, LEDs, sound, every USB interface), so forking per burst is more work than 160 KB asleep. `contrib/nixafnetlink.socket` documents that option; it is not wired.
+Something must hold the netlink fd. This daemon is that holder: it sleeps in `recv` (~160 KB, 0% CPU). systemd `ListenNetlink=` can hold the socket instead, but group 1 is *every* kobject (modules, LEDs, sound, every USB interface), so forking per burst is more work than 160 KB asleep. `contrib/arclinkdae.socket` documents that option; it is not wired.
 
 ```mermaid
 sequenceDiagram
@@ -102,7 +102,7 @@ sequenceDiagram
   Daemon->>IMEX: on_add (no 2ca3/46d)
 ```
 
-Rules load at start (and on `SIGHUP` / `nixafnetlink reload`). Plug events match the in-memory table. Files are not re-read per event. No inotify.
+Rules load at start (and on `SIGHUP` / `arclinkdae reload`). Plug events match the in-memory table. Files are not re-read per event. No inotify.
 
 USB-C gadgets also emit `typec *-partner`, which is the same node the Qi pad uses. The IMEX rule waits 1.5 s, rechecks `/sys/bus/usb/devices` every 100 ms, and **retracts** if `2ca3/` or `46d/` appears after a start. Raw partner-add is not enough.
 
@@ -121,25 +121,25 @@ USB-C gadgets also emit `typec *-partner`, which is the same node the Qi pad use
 
 ```bash
 nix develop -c make          # musl -static; make STATIC=0 for glibc
-./nixafnetlink dump          # watch raw kernel events
-./nixafnetlink run --dry-run -v
-./nixafnetlink run -r rules.d
-./nixafnetlink reload        # SIGHUP the running dispatcher
+./arclinkdae dump          # watch raw kernel events
+./arclinkdae run --dry-run -v
+./arclinkdae run -r rules.d
+./arclinkdae reload        # SIGHUP the running dispatcher
 ```
 
-Rules dir: `-r DIR`, `$NIXAFNETLINK_RULES`, `./rules.d`, else `~/.config/nixafnetlink/rules.d`.
+Rules dir: `-r DIR`, `$ARCLINKDAE_RULES`, `./rules.d`, else `~/.config/arclinkdae/rules.d`.
 
-User unit example: [`contrib/nixafnetlink.service`](contrib/nixafnetlink.service). Not enabled.
+User unit example: [`contrib/arclinkdae.service`](contrib/arclinkdae.service). Not enabled.
 
 > [!TIP]
 > Plug the device, run `dump`, copy `PRODUCT` / `DEVPATH`. Kernel `PRODUCT` is `%x` — Logitech `046d` arrives as `46d`.
 
 ## Add a device
 
-1. `./nixafnetlink dump` while plugging. Note `SUBSYSTEM`, `DEVTYPE`, `PRODUCT` (USB) or `DEVPATH` (typec).
+1. `./arclinkdae dump` while plugging. Note `SUBSYSTEM`, `DEVTYPE`, `PRODUCT` (USB) or `DEVPATH` (typec).
 2. Copy [`examples/usb.rule`](examples/usb.rule), [`examples/typec-partner.rule`](examples/typec-partner.rule), or [`examples/kitty.rule`](examples/kitty.rule) into `rules.d/yourname.rule`.
 3. Set `name`, match keys, `on_add`, `on_remove`.
-4. `./nixafnetlink reload`.
+4. `./arclinkdae reload`.
 
 ```
 on_add=$HOME/Documents/myapp/run.sh
@@ -178,7 +178,7 @@ contrib/             user .service / .socket (optional)
 - **Reload does not rescan** already-plugged devices. Unplug/replug or restart.
 - **IMEX pad is delayed ~1.5 s** on purpose (USB-C gadgets enumerate a partner first).
 - **DJI can still print a retracted IMEX add** in the same second if USB shows up after the timer; retract then kills it. Sysfs is rechecked every 100 ms during debounce to shrink that window.
-- **Socket activation** (`contrib/nixafnetlink.socket`) is documentation only.
+- **Socket activation** (`contrib/arclinkdae.socket`) is documentation only.
 
 ## License
 

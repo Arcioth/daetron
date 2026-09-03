@@ -19,18 +19,18 @@ SRC = src/main.c src/nl.c src/rules.c src/dump.c src/run.c
 
 .PHONY: all clean install
 
-all: nixafnetlink uevent
+all: arclinkdae uevent
 
-nixafnetlink: $(SRC)
+arclinkdae: $(SRC)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC)
 
-uevent: nixafnetlink
-	ln -sf nixafnetlink uevent
+uevent: arclinkdae
+	ln -sf arclinkdae uevent
 
 clean:
-	rm -f nixafnetlink uevent
+	rm -f arclinkdae uevent
 
-install: nixafnetlink
+install: arclinkdae
 	install -d $(DESTDIR)$(PREFIX)/bin
-	install -m755 nixafnetlink $(DESTDIR)$(PREFIX)/bin/nixafnetlink
-	ln -sf nixafnetlink $(DESTDIR)$(PREFIX)/bin/uevent
+	install -m755 arclinkdae $(DESTDIR)$(PREFIX)/bin/arclinkdae
+	ln -sf arclinkdae $(DESTDIR)$(PREFIX)/bin/uevent

@@ -1,10 +1,10 @@
 [Unit]
-Description=nixafnetlink applet dispatcher
+Description=arclinkdae applet dispatcher
 After=default.target
 
 [Service]
 Type=simple
-ExecStart=%h/Documents/nixafnetlink/nixafnetlink run -r %h/Documents/nixafnetlink/rules.d
+ExecStart=%h/Documents/arclinkdae/arclinkdae run -r %h/Documents/arclinkdae/rules.d
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 RestartSec=3
