@@ -4,6 +4,8 @@ Started 2026-09-03. WhatsApp away session.
 
 GitHub: https://github.com/Arcioth/arclinkdae (public, Apache-2.0). README leads with measured results vs the three bash watchers.
 
+HHO article (Arch Documents): `~/Documents/ödevspor/arclinkdae_makale/Arclinkdae_Makale.{docx,odt,pdf}`. Cover logos from master template. Old GitHub name nixafnetlink redirects; token had no delete_repo.
+
 ## Status
 
 Scaffold is in `~/Documents/arclinkdae`. One C binary, `uevent`, binds `NETLINK_KOBJECT_UEVENT` group 1 as an unprivileged user and blocks on `recv`. `--applet` keeps only DJI / Logitech / IMEX add|remove.
