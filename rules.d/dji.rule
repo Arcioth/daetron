@@ -1,0 +1,9 @@
+# DJI Mic Mini 2 RX → ~/Documents/micmini2
+name=dji
+match_subsystem=usb
+match_devtype=usb_device
+match_product_prefix=2ca3/4011/
+debounce_ms=0
+on_add=$HOME/Documents/micmini2/tools/run-fast.sh
+on_remove=kill:micmini2
+waybar_signal=7

@@ -1,0 +1,14 @@
+[Unit]
+Description=nixafnetlink applet dispatcher
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=%h/Documents/nixafnetlink/nixafnetlink run -r %h/Documents/nixafnetlink/rules.d
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=3
+KillMode=process
+
+[Install]
+WantedBy=default.target

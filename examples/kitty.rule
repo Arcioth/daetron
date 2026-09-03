@@ -1,0 +1,9 @@
+# Applet can be anything in on_add: Tauri, Kitty, a script.
+# Unique --class so on_remove does not kill every Kitty.
+
+name=example-kitty
+match_subsystem=usb
+match_devtype=usb_device
+match_product_prefix=0000/0000/
+on_add=kitty --class nixaf-example -e sh -c 'echo plugged; read x'
+on_remove=pkill -f 'kitty --class nixaf-example'

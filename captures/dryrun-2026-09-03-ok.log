@@ -1,0 +1,28 @@
+loaded 3 rules from rules.d
+dispatch ready (dry=1)
+add imex
+exec /home/arcioth/Documents/imex/run.sh
+waybar SIGRTMIN+6
+retract imex (saw 2ca3/4011/0)
+remove imex
+kill imex
+waybar SIGRTMIN+6
+add dji
+exec /home/arcioth/Documents/micmini2/tools/run-fast.sh
+waybar SIGRTMIN+7
+skip remove imex: never started
+remove dji
+kill micmini2
+waybar SIGRTMIN+7
+add logi
+exec /home/arcioth/Documents/mother/run.sh
+waybar SIGRTMIN+7
+remove logi
+kill mother
+waybar SIGRTMIN+7
+add imex
+exec /home/arcioth/Documents/imex/run.sh
+waybar SIGRTMIN+6
+remove imex
+kill imex
+waybar SIGRTMIN+6

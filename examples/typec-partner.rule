@@ -1,0 +1,10 @@
+# Type-C partner (charger, dongle). USB-C gadgets also emit this.
+# Debounce and suppress known USB VIDs so a Mic RX is not a charger.
+
+name=example-typec
+match_subsystem=typec
+match_devpath_suffix=-partner
+debounce_ms=1500
+suppress_if_product_prefix=2ca3/,46d/
+on_add=/bin/true
+on_remove=kill:true

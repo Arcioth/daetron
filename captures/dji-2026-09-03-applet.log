@@ -1,0 +1,4 @@
+imex add typec - /devices/platform/USBC000:00/typec/port1/port1-partner
+dji add usb 2ca3/4011/0 /devices/pci0000:00/0000:00:08.3/0000:07:00.4/usb8/8-1
+imex remove typec - /devices/platform/USBC000:00/typec/port1/port1-partner
+dji remove usb 2ca3/4011/0 /devices/pci0000:00/0000:00:08.3/0000:07:00.4/usb8/8-1

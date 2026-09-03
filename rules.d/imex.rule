@@ -1,0 +1,11 @@
+# IMEX Qi pad → ~/Documents/imex
+# USB-C gadgets (DJI RX) also emit typec *-partner. Wait 1s; cancel if a
+# known usb_device shows up. Real pad is partner + PD, no usb_device.
+name=imex
+match_subsystem=typec
+match_devpath_suffix=-partner
+debounce_ms=1500
+suppress_if_product_prefix=2ca3/,46d/
+on_add=$HOME/Documents/imex/run.sh
+on_remove=kill:imex
+waybar_signal=6

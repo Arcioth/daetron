@@ -1,0 +1,9 @@
+# Logitech Lightspeed receiver → ~/Documents/mother
+name=logi
+match_subsystem=usb
+match_devtype=usb_device
+match_product_prefix=46d/
+debounce_ms=0
+on_add=$HOME/Documents/mother/run.sh
+on_remove=kill:mother
+waybar_signal=7

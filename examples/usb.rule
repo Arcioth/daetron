@@ -1,0 +1,18 @@
+# Copy to rules.d/, set PRODUCT, reload.
+# Kernel PRODUCT is hex without leading zeros (Logitech 046d → 46d).
+# Find it with: ./nixafnetlink dump
+#
+# name=my-usb
+# match_subsystem=usb
+# match_devtype=usb_device
+# match_product_prefix=VID/PID/
+# on_add=/path/to/start
+# on_remove=kill:mybinary
+# waybar_signal=0
+
+name=example-usb
+match_subsystem=usb
+match_devtype=usb_device
+match_product_prefix=0000/0000/
+on_add=/bin/true
+on_remove=kill:true

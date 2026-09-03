@@ -1,0 +1,26 @@
+13:30:38 loaded 3 rules from rules.d
+13:30:38 dispatch ready (dry=1)
+13:32:39 add imex
+13:32:39 exec /home/arcioth/Documents/imex/run.sh
+13:32:39 waybar SIGRTMIN+6
+13:32:39 add dji
+13:32:39 exec /home/arcioth/Documents/micmini2/tools/run-fast.sh
+13:32:39 waybar SIGRTMIN+7
+13:32:43 remove imex
+13:32:43 kill imex
+13:32:43 waybar SIGRTMIN+6
+13:32:43 remove dji
+13:32:43 kill micmini2
+13:32:43 waybar SIGRTMIN+7
+13:32:48 add logi
+13:32:48 exec /home/arcioth/Documents/mother/run.sh
+13:32:48 waybar SIGRTMIN+7
+13:32:52 remove logi
+13:32:52 kill mother
+13:32:52 waybar SIGRTMIN+7
+13:32:59 add imex
+13:32:59 exec /home/arcioth/Documents/imex/run.sh
+13:32:59 waybar SIGRTMIN+6
+13:33:02 remove imex
+13:33:02 kill imex
+13:33:02 waybar SIGRTMIN+6

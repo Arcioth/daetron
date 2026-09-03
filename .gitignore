@@ -1,0 +1,6 @@
+uevent
+nixafnetlink
+uevent-musl
+result
+*.o
+.direnv
