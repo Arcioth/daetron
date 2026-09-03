@@ -1,5 +1,7 @@
 # nixafnetlink
 
+https://github.com/Arcioth/nixafnetlink
+
 Kernel `NETLINK_KOBJECT_UEVENT` in a small C daemon. No libudev. A drop-in `.rule` file turns a plug/unplug into a command — Tauri popup, Kitty, a script, anything.
 
 ```bash

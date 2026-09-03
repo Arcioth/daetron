@@ -2,6 +2,8 @@
 
 Started 2026-09-03. WhatsApp away session.
 
+GitHub: https://github.com/Arcioth/nixafnetlink (public).
+
 ## Status
 
 Scaffold is in `~/Documents/nixafnetlink`. One C binary, `uevent`, binds `NETLINK_KOBJECT_UEVENT` group 1 as an unprivileged user and blocks on `recv`. `--applet` keeps only DJI / Logitech / IMEX add|remove.
