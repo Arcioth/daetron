@@ -29,9 +29,9 @@ One daemon vs three `sleep 2` loops. Same three devices: DJI Mic Mini 2 RX (`2ca
 
 ```mermaid
 xychart-beta
-    title Idle RSS (KB), same machine 2026-09-03
-    x-axis ["micmini2-watch", "mother-watch", "imex-watch", "daetron run"]
-    y-axis "RSS KB" 0 --> 5200
+    title "Idle RSS in KB"
+    x-axis ["micmini2" "mother" "imex" "daetron"]
+    y-axis "KB" 0 --> 5200
     bar [4784, 4808, 4788, 160]
 ```
 
