@@ -3,7 +3,7 @@
 ## 0.4.0 — 2026-09-08
 
 - Renamed **arclinkdae → daetron**. Folder `~/Documents/daetron`. GitHub `Arcioth/daetron`. Binary, systemd units, pid/lock, env `DAETRON_RULES`, `~/.config/daetron/rules.d`. LICENSE (Apache-2.0) unchanged.
-- Old GitHub repo `Arcioth/arclinkdae` removed.
+- New GitHub repo `Arcioth/daetron`. Deleting `Arcioth/arclinkdae` needs a token with `delete_repo` (current `gh` token does not). Do **not** run `~/Documents/nixos/apply.sh` for this rename — the NixOS tree has no arclinkdae/daetron package. HHO PDF left as-is.
 
 ## 0.3.0 — 2026-09-03
 

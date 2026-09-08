@@ -4,6 +4,8 @@ Started 2026-09-03. WhatsApp away session.
 
 GitHub: https://github.com/Arcioth/daetron (public, Apache-2.0). README leads with measured results vs the three bash watchers.
 
+Do **not** `./apply.sh` / `apply-gen4.sh` for this rename. `~/Documents/nixos` and `/etc/nixos` do not mention the daemon. Leave `~/Documents/ödevspor/arclinkdae_makale/` (PDF included) untouched.
+
 HHO article (Arch Documents, old name on disk): `~/Documents/ödevspor/arclinkdae_makale/Arclinkdae_Makale.{docx,odt,pdf}`. Cover logos from master template. Do not rename the submitted paper.
 
 ## Status
