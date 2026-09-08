@@ -1,0 +1,11 @@
+# Spare USB → ctron 512² applet.
+# PRODUCT is kernel hex without leading zeros (046d → 46d).
+# Set match_product_prefix after: ./daetron dump  while plugging the spare stick.
+# 0000/0000/ matches nothing — do not use the webcam, BT radio, or Logitech 46d.
+name=ctron
+match_subsystem=usb
+match_devtype=usb_device
+match_product_prefix=0000/0000/
+debounce_ms=300
+on_add=$HOME/Documents/ctron/scripts/daetron-spawn.sh
+# leave applet open on unplug

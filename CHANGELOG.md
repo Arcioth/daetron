@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 — 2026-09-08
+
+- `rules.d/ctron.rule`: USB `DEVTYPE=usb_device` → `~/Documents/ctron/scripts/daetron-spawn.sh`. Prefix `0000/0000/` until a spare dongle is identified. No `on_remove` kill.
+
 ## 0.4.0 — 2026-09-08
 
 - Renamed **arclinkdae → daetron**. Folder `~/Documents/daetron`. GitHub `Arcioth/daetron`. Binary, systemd units, pid/lock, env `DAETRON_RULES`, `~/.config/daetron/rules.d`. LICENSE (Apache-2.0) unchanged.
