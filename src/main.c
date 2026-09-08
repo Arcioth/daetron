@@ -9,7 +9,7 @@
 static void usage(const char *argv0)
 {
 	fprintf(stderr,
-		"arclinkdae — kernel uevents to applet commands, no libudev\n"
+		"daetron — kernel uevents to applet commands, no libudev\n"
 		"\n"
 		"usage: %s [command] [options]\n"
 		"\n"
@@ -20,8 +20,8 @@ static void usage(const char *argv0)
 		"      -v            log matches\n"
 		"  reload            SIGHUP the running dispatcher\n"
 		"\n"
-		"rules dir: -r DIR, $ARCLINKDAE_RULES, ./rules.d,\n"
-		"           else ~/.config/arclinkdae/rules.d\n"
+		"rules dir: -r DIR, $DAETRON_RULES, ./rules.d,\n"
+		"           else ~/.config/daetron/rules.d\n"
 		"reload reads rules again; does not rescan already-plugged devices.\n",
 		argv0);
 }

@@ -1,11 +1,11 @@
-# Optional: systemd holds the netlink socket, starts arclinkdae
+# Optional: systemd holds the netlink socket, starts daetron
 # only when a kernel uevent arrives. Not the default — group 1 is
 # every kobject (modules, leds, sound, every USB interface), so
 # this forks on a lot more than DJI/logi/IMEX. The idle daemon
-# (contrib/arclinkdae.service) sits in recv at ~150 KB / 0% CPU
+# (contrib/daetron.service) sits in recv at ~150 KB / 0% CPU
 # and is cheaper.
 #
-# Pair with arclinkdae.service. Enable the .socket, not the .service.
+# Pair with daetron.service. Enable the .socket, not the .service.
 # The binary must accept LISTEN_FDS (not wired yet).
 
 [Socket]

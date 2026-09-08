@@ -1,10 +1,10 @@
 [Unit]
-Description=arclinkdae applet dispatcher
+Description=daetron applet dispatcher
 After=default.target
 
 [Service]
 Type=simple
-ExecStart=%h/Documents/arclinkdae/arclinkdae run -r %h/Documents/arclinkdae/rules.d
+ExecStart=%h/Documents/daetron/daetron run -r %h/Documents/daetron/rules.d
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 RestartSec=3

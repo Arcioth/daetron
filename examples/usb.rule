@@ -1,6 +1,6 @@
 # Copy to rules.d/, set PRODUCT, reload.
 # Kernel PRODUCT is hex without leading zeros (Logitech 046d → 46d).
-# Find it with: ./arclinkdae dump
+# Find it with: ./daetron dump
 #
 # name=my-usb
 # match_subsystem=usb

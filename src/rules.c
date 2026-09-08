@@ -188,7 +188,7 @@ int rule_suppress_product(const struct rule *r, const char *product)
 
 void rules_default_dir(char *buf, size_t n)
 {
-	const char *env = getenv("ARCLINKDAE_RULES");
+	const char *env = getenv("DAETRON_RULES");
 	const char *home = getenv("HOME");
 	struct stat st;
 
@@ -201,7 +201,7 @@ void rules_default_dir(char *buf, size_t n)
 		return;
 	}
 	if (home && home[0]) {
-		snprintf(buf, n, "%s/.config/arclinkdae/rules.d", home);
+		snprintf(buf, n, "%s/.config/daetron/rules.d", home);
 		if (stat(buf, &st) == 0 && S_ISDIR(st.st_mode))
 			return;
 	}

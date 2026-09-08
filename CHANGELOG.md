@@ -1,8 +1,13 @@
 # Changelog
 
+## 0.4.0 — 2026-09-08
+
+- Renamed **arclinkdae → daetron**. Folder `~/Documents/daetron`. GitHub `Arcioth/daetron`. Binary, systemd units, pid/lock, env `DAETRON_RULES`, `~/.config/daetron/rules.d`. LICENSE (Apache-2.0) unchanged.
+- Old GitHub repo `Arcioth/arclinkdae` removed.
+
 ## 0.3.0 — 2026-09-03
 
-- Project renamed to **arclinkdae**. Folder `~/Documents/arclinkdae`. GitHub `Arcioth/arclinkdae` (former nixafnetlink name redirects). Binary, rules dir, pid/lock, env `ARCLINKDAE_RULES`.
+- Project renamed to **arclinkdae**. Folder `~/Documents/arclinkdae`. GitHub `Arcioth/arclinkdae` (former nixafnetlink name redirected). Binary, rules dir, pid/lock, env `ARCLINKDAE_RULES`.
 - Future field tests target Arch as well as NixOS.
 
 ## 0.1.0 — 2026-09-03
@@ -40,10 +45,10 @@
 
 ## 0.2.0 — 2026-09-03
 
-- Dispatcher: `arclinkdae run -r rules.d`. Loads `*.rule` into memory, one sysfs scan, then netlink. SIGHUP / `arclinkdae reload`. `--dry-run`.
+- Dispatcher: `daetron run -r rules.d`. Loads `*.rule` into memory, one sysfs scan, then netlink. SIGHUP / `daetron reload`. `--dry-run`.
 - IMEX: 1000 ms debounce, suppress `2ca3/` and `46d/`. Remove is skipped if add never fired.
 - `on_add` is `/bin/sh -c` (Tauri, Kitty, anything). `on_remove=kill:comm` or a command. `$HOME` expanded.
-- Examples in `examples/`. User unit in `contrib/arclinkdae.service`. README for adding a device.
+- Examples in `examples/`. User unit in `contrib/daetron.service`. README for adding a device.
 - Binary ~92 KB static, ~156 KB RSS with three rules. Bash watchers not replaced yet.
 
 ## 0.2.1 — 2026-09-03

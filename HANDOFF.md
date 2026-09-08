@@ -1,14 +1,14 @@
-# arclinkdae handoff
+# daetron handoff
 
 Started 2026-09-03. WhatsApp away session.
 
-GitHub: https://github.com/Arcioth/arclinkdae (public, Apache-2.0). README leads with measured results vs the three bash watchers.
+GitHub: https://github.com/Arcioth/daetron (public, Apache-2.0). README leads with measured results vs the three bash watchers.
 
-HHO article (Arch Documents): `~/Documents/ödevspor/arclinkdae_makale/Arclinkdae_Makale.{docx,odt,pdf}`. Cover logos from master template. Old GitHub name nixafnetlink redirects; token had no delete_repo.
+HHO article (Arch Documents, old name on disk): `~/Documents/ödevspor/arclinkdae_makale/Arclinkdae_Makale.{docx,odt,pdf}`. Cover logos from master template. Do not rename the submitted paper.
 
 ## Status
 
-Scaffold is in `~/Documents/arclinkdae`. One C binary, `uevent`, binds `NETLINK_KOBJECT_UEVENT` group 1 as an unprivileged user and blocks on `recv`. `--applet` keeps only DJI / Logitech / IMEX add|remove.
+Scaffold is in `~/Documents/daetron`. One C binary, `uevent`, binds `NETLINK_KOBJECT_UEVENT` group 1 as an unprivileged user and blocks on `recv`. `--applet` keeps only DJI / Logitech / IMEX add|remove.
 
 Default build is **musl `-static`**. Live processes after 10 min (including the field test):
 
@@ -36,7 +36,7 @@ boot / SIGHUP  →  read rules.d into memory, one sysfs scan
 kernel uevent  →  match the in-memory table  →  exec/kill + SIGRTMIN+N waybar
 ```
 
-- **Load:** start, and `kill -HUP` / `systemctl --user reload arclinkdae` (or a `uevent reload` that signals the running pid).
+- **Load:** start, and `kill -HUP` / `systemctl --user reload daetron` (or a `uevent reload` that signals the running pid).
 - **Not:** inotify on `rules.d/` (extra fd, extra wakes, new applets are rare).
 - **Not:** `open()` the rule file on every add/remove.
 
@@ -44,11 +44,11 @@ New popup = drop a file in `rules.d/` + reload. No C edit. Draft rules: `dji`, `
 
 Waybar: drop `interval: 2` on `custom/imex` and `custom/mother`; keep `signal` 6/7. The daemon pokes waybar only on add/remove. Status scripts still run, just not every 2s.
 
-Dispatcher is `./arclinkdae run`. musl static, ~92 KB disk, ~156 KB RSS dry-run (rules + poll). `--dry-run` prints actions. Do not swap systemd units until a live plug is proven in `run` (not just dump). `contrib/arclinkdae.service` is an example only.
+Dispatcher is `./daetron run`. musl static, ~92 KB disk, ~156 KB RSS dry-run (rules + poll). `--dry-run` prints actions. Do not swap systemd units until a live plug is proven in `run` (not just dump). `contrib/daetron.service` is an example only.
 
 Adding a device is a `.rule` file + reload. Not a C change. `on_add` is any command (Tauri, Kitty, script).
 
-**Idle daemon vs wake-on-plug:** the kernel only delivers uevents to a bound netlink socket. Something has to hold that fd. Today that is `arclinkdae run` blocked in `recv` (~150 KB, 0% CPU). systemd *can* hold it instead (`ListenNetlink=kobject-uevent 1`, `contrib/arclinkdae.socket`) and fork us per burst — but group 1 is *every* kobject, so that is more starts, not fewer, unless we stay running after the first packet. LISTEN_FDS is not wired yet. Do not switch unless idle RSS becomes a problem.
+**Idle daemon vs wake-on-plug:** the kernel only delivers uevents to a bound netlink socket. Something has to hold that fd. Today that is `daetron run` blocked in `recv` (~150 KB, 0% CPU). systemd *can* hold it instead (`ListenNetlink=kobject-uevent 1`, `contrib/daetron.socket`) and fork us per burst — but group 1 is *every* kobject, so that is more starts, not fewer, unless we stay running after the first packet. LISTEN_FDS is not wired yet. Do not switch unless idle RSS becomes a problem.
 
 Verified: bind succeeds, process sits in `recv`. Writing `/sys/.../uevent` to synthesize a packet needs root; real proof is a hardware plug.
 
@@ -93,13 +93,13 @@ Live watchers are **unchanged**: they still poll sysfs every 2s (`micmini2-watch
 ## Run
 
 ```bash
-cd ~/Documents/arclinkdae
+cd ~/Documents/daetron
 nix develop -c make
-./arclinkdae dump
-./arclinkdae applet
-./arclinkdae run -r rules.d --dry-run -v
-./arclinkdae run -r rules.d
-./arclinkdae reload
+./daetron dump
+./daetron applet
+./daetron run -r rules.d --dry-run -v
+./daetron run -r rules.d
+./daetron reload
 ```
 
 No root. If `bind` fails, say so — do not fall back to udev.
@@ -126,6 +126,7 @@ imex add typec - /devices/.../port0/port0-partner
 2. Live `run` (no `--dry-run`) still not the systemd trigger. Bash watchers still own plug popups.
 3. Swap units only after a live (non-dry) plug with retract/sysfs cancel confirmed.
 4. Waybar: drop `interval: 2` on imex/mother after the daemon is the trigger.
+5. Popup shell: **kitty `--class` + TUI**, not Tauri/WebKit and not wgpu. Primer: `~/Documents/applet-bakeoff/TUI.md`.
 
 ## Open questions
 

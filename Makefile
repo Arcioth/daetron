@@ -19,18 +19,18 @@ SRC = src/main.c src/nl.c src/rules.c src/dump.c src/run.c
 
 .PHONY: all clean install
 
-all: arclinkdae uevent
+all: daetron uevent
 
-arclinkdae: $(SRC)
+daetron: $(SRC)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC)
 
-uevent: arclinkdae
-	ln -sf arclinkdae uevent
+uevent: daetron
+	ln -sf daetron uevent
 
 clean:
-	rm -f arclinkdae uevent
+	rm -f daetron uevent
 
-install: arclinkdae
+install: daetron
 	install -d $(DESTDIR)$(PREFIX)/bin
-	install -m755 arclinkdae $(DESTDIR)$(PREFIX)/bin/arclinkdae
-	ln -sf arclinkdae $(DESTDIR)$(PREFIX)/bin/uevent
+	install -m755 daetron $(DESTDIR)$(PREFIX)/bin/daetron
+	ln -sf daetron $(DESTDIR)$(PREFIX)/bin/uevent
