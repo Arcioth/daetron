@@ -1,0 +1,9 @@
+# Red USB-C Phone (Generic AB13X USB Audio 001f:0b21) → ~/Documents/redphone
+name=redphone
+match_subsystem=usb
+match_devtype=usb_device
+match_product_prefix=1f/b21/
+debounce_ms=250
+on_add=$HOME/Documents/redphone/bin/redphone-ctl plug
+on_remove=$HOME/Documents/redphone/bin/redphone-ctl unplug
+waybar_signal=12
